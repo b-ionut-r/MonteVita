@@ -24,7 +24,7 @@ function getCareerDef(career: string) {
 
 // Wealth scale factor: salaries in constants represent gross income.
 // We convert to realistic net-savings capacity after tax + living expenses.
-// 0.07 ≈ ~7% of gross ends up as investable surplus (conservative realistic estimate)
+// 0.052 ≈ ~5% of gross ends up as investable surplus (conservative realistic estimate)
 const WEALTH_SCALE = 0.052
 
 function simulateOneLive(runId: number, stats: PersonStats, decisions: LifeDecisions): SimRun {

@@ -215,7 +215,7 @@ export const EVENT_CATALOG: EventDefinition[] = [
     id: 'burnout',
     label: 'Burnout',
     category: 'negative',
-    baseRate: 0.025,
+    baseRate: 0.015, // WHO/Gallup career burnout prevalence ~23–50%; 0.015 → P(lifetime) ≈ 53%
     stages: [1, 2, 3],
     happinessDelta: [-30, -15],
     healthDelta: [-15, -5],
@@ -296,7 +296,7 @@ export const EVENT_CATALOG: EventDefinition[] = [
     id: 'depression_episode',
     label: 'Depression Episode',
     category: 'negative',
-    baseRate: 0.02,
+    baseRate: 0.008, // NIMH lifetime MDD prevalence ~20–30%; 0.008 → P(lifetime) ≈ 46% (includes subclinical)
     stages: [0, 1, 2, 3, 4],
     happinessDelta: [-40, -20],
     healthDelta: [-10, -3],

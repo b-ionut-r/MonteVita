@@ -4,6 +4,7 @@ import OutcomeCards from './OutcomeCards'
 import DistributionChart from './DistributionChart'
 import LifePathChart from './LifePathChart'
 import EventHeatmap from './EventHeatmap'
+import RecommendationsPanel from './RecommendationsPanel'
 import SimSummary from '@/components/simulation/SimSummary'
 import type { OutcomeMetric, ResultsTab } from '@/types'
 
@@ -38,6 +39,7 @@ const TABS: { id: ResultsTab; label: string }[] = [
   { id: 'distribution', label: 'Distribution' },
   { id: 'lifePaths', label: 'Life Paths' },
   { id: 'events', label: 'Event Analysis' },
+  { id: 'recommendations', label: '💡 Insights' },
 ]
 
 export default function ResultsPanel() {
@@ -156,6 +158,8 @@ export default function ResultsPanel() {
             )}
 
             {activeTab === 'events' && <EventHeatmap />}
+
+            {activeTab === 'recommendations' && <RecommendationsPanel />}
           </motion.div>
         </AnimatePresence>
       </div>

@@ -78,4 +78,4 @@ export interface SimulationResults {
 export type SimulationStatus = 'idle' | 'running' | 'complete' | 'error'
 
 export type OutcomeMetric = 'wealth' | 'happiness' | 'health' | 'success'
-export type ResultsTab = 'distribution' | 'lifePaths' | 'events'
+export type ResultsTab = 'distribution' | 'lifePaths' | 'events' | 'recommendations'

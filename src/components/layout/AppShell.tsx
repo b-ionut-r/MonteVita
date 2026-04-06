@@ -2,6 +2,7 @@ import ParticleField from '@/components/ui/ParticleField'
 import Sidebar from './Sidebar'
 import MainPanel from './MainPanel'
 import CompareOverlay from '@/components/results/CompareOverlay'
+import QuizModal from '@/components/quiz/QuizModal'
 
 export default function AppShell() {
   return (
@@ -12,6 +13,7 @@ export default function AppShell() {
         <MainPanel />
       </div>
       <CompareOverlay />
+      <QuizModal />
     </div>
   )
 }

@@ -3,6 +3,8 @@ import { immer } from 'zustand/middleware/immer'
 import type { PersonStats, LifeDecisions, SimulationResults, SimulationStatus, OutcomeMetric, ResultsTab } from '@/types'
 import { DEFAULT_STATS } from '@/constants/stats'
 
+export type InputMode = 'manual' | 'quiz'
+
 const DEFAULT_DECISIONS: LifeDecisions = {
   career: 'tech',
   riskTolerance: 'medium',
@@ -27,12 +29,18 @@ interface SimulatorState {
   activeTab: ResultsTab
   hasSimulated: boolean
   compareVisible: boolean
+  inputMode: InputMode
+  quizOpen: boolean
 
   // Actions — Person
   setStat: (key: keyof PersonStats, value: number) => void
   setDecision: <K extends keyof LifeDecisions>(key: K, value: LifeDecisions[K]) => void
   applyPreset: (stats: PersonStats, decisions: LifeDecisions) => void
   resetToDefaults: () => void
+  setInputMode: (mode: InputMode) => void
+  openQuiz: () => void
+  closeQuiz: () => void
+  applyQuizStats: (stats: PersonStats) => void
 
   // Actions — Simulation
   setStatus: (status: SimulationStatus) => void
@@ -61,16 +69,28 @@ export const useSimulatorStore = create<SimulatorState>()(
     activeTab: 'distribution',
     hasSimulated: false,
     compareVisible: false,
+    inputMode: 'manual',
+    quizOpen: false,
 
     setStat: (key, value) => set(s => { s.stats[key] = value }),
     setDecision: (key, value) => set(s => { (s.decisions as LifeDecisions)[key] = value }),
     applyPreset: (stats, decisions) => set(s => {
       s.stats = stats
       s.decisions = decisions
+      s.inputMode = 'manual'
     }),
     resetToDefaults: () => set(s => {
       s.stats = { ...DEFAULT_STATS }
       s.decisions = { ...DEFAULT_DECISIONS }
+      s.inputMode = 'manual'
+    }),
+    setInputMode: (mode) => set(s => { s.inputMode = mode }),
+    openQuiz: () => set(s => { s.quizOpen = true }),
+    closeQuiz: () => set(s => { s.quizOpen = false }),
+    applyQuizStats: (stats) => set(s => {
+      s.stats = stats
+      s.inputMode = 'quiz'
+      s.quizOpen = false
     }),
 
     setStatus: (status) => set(s => { s.status = status }),
