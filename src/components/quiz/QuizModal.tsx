@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useSimulatorStore } from '@/store/useSimulatorStore'
 import {
@@ -310,6 +310,7 @@ export default function QuizModal() {
   const [answers, setAnswers] = useState<QuizAnswers>(emptyAnswers)
   const [phase, setPhase] = useState<Phase>('quiz')
   const [inferredStats, setInferredStats] = useState<PersonStats | null>(null)
+  const bodyRef = useRef<HTMLDivElement>(null)
 
   // Reset when modal opens
   useEffect(() => {
@@ -338,6 +339,10 @@ export default function QuizModal() {
     })
   }, [])
 
+  const scrollBodyToTop = () => {
+    bodyRef.current?.scrollTo({ top: 0, behavior: 'instant' })
+  }
+
   const handleNext = () => {
     if (isLastSection) {
       setPhase('calculating')
@@ -348,6 +353,7 @@ export default function QuizModal() {
       }, 1600)
     } else {
       setSectionIdx(i => i + 1)
+      scrollBodyToTop()
     }
   }
 
@@ -473,7 +479,7 @@ export default function QuizModal() {
             </div>
 
             {/* ── Body ───────────────────────────────────────────────────── */}
-            <div style={{ flex: 1, overflowY: 'auto', padding: '0 24px' }}>
+            <div ref={bodyRef} style={{ flex: 1, overflowY: 'auto', padding: '0 24px' }}>
               <AnimatePresence mode="wait">
                 {phase === 'quiz' && (
                   <motion.div
@@ -581,7 +587,7 @@ export default function QuizModal() {
                 flexShrink: 0,
               }}>
                 <button
-                  onClick={() => setSectionIdx(i => Math.max(0, i - 1))}
+                  onClick={() => { setSectionIdx(i => Math.max(0, i - 1)); scrollBodyToTop() }}
                   disabled={sectionIdx === 0}
                   style={{
                     padding: '8px 16px',
